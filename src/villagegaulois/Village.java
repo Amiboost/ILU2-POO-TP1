@@ -18,6 +18,8 @@ public class Village {
 
 		private Marche(int nbEtals) {
 			etals = new Etal[nbEtals];
+			for (int i=0; i < nbEtals; i++)
+				etals[i] = new Etal();
 			this.nbEtals = nbEtals;
 		}
 
@@ -46,7 +48,7 @@ public class Village {
 			int curIndex = 0;
 			for (int i=0; i < nbEtals && curIndex < tabSize; i++) {
 				if (etals[i].contientProduit(produit)) {
-					result[tabSize] = etals[i];
+					result[curIndex] = etals[i];
 					curIndex++;
 				}
 			}
@@ -61,7 +63,7 @@ public class Village {
 			return null;
 		}
 
-		private String  afficherMarche() {
+		private String afficherMarche() {
 			int nbEtalVide = 0;
 			String result = "";
 			for (int i=0; i < nbEtals; i++) {
@@ -113,6 +115,9 @@ public class Village {
 	}
 
 	public String afficherVillageois() {
+		if (chef == null) {
+			throw new VillageSansChefException("Le village n'a pas de chef");
+		}
 		StringBuilder chaine = new StringBuilder();
 		if (nbVillageois < 1) {
 			chaine.append("Il n'y a encore aucun habitant au village du chef "
@@ -166,7 +171,7 @@ public class Village {
 		return rechercherEtal(vendeur).libererEtal();
 	}
 
-	public String afficherMArche() {
-		marche.afficherMarche();
+	public String afficherMarche() {
+		return marche.afficherMarche();
 	}
 }
